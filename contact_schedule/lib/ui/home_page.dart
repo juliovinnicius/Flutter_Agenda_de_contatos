@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                 value: OrderOptions.orderza,
               ),
             ],
-            onSelected: _orderList(),
+            onSelected: _orderList,
           )
         ],
       ),
@@ -84,7 +84,8 @@ class _HomePageState extends State<HomePage> {
                   image: DecorationImage(
                     image: contacts[index].img != null ?
                         FileImage( File( contacts[index].img ) ) :
-                        AssetImage( "images/person.jpg" )
+                        AssetImage( "images/person.jpg" ),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -223,5 +224,21 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _orderList( OrderOptions result ){}
+  void _orderList( OrderOptions result ){
+    switch( result ){
+      case OrderOptions.orderaz:
+        contacts.sort(( a, b ){
+          return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+        });
+        break;
+      case OrderOptions.orderza:
+        contacts.sort(( a, b ){
+          return b.name.toLowerCase().compareTo(a.name.toLowerCase());
+        });
+        break;
+    }
+    setState(() {
+
+    });
+  }
 }
