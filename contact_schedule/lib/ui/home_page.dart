@@ -5,6 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'contact_page.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+
+enum OrderOptions {orderaz, orderza}
 
 class HomePage extends StatefulWidget {
   @override
@@ -31,6 +35,21 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.red,
         title: Text("Contacts"),
         centerTitle: true,
+        actions: <Widget>[
+          PopupMenuButton<OrderOptions>(
+            itemBuilder: ( context ) => <PopupMenuEntry<OrderOptions>>[
+              const PopupMenuItem<OrderOptions>(
+                child: Text("Order A-Z"),
+                value: OrderOptions.orderaz,
+              ),
+              const PopupMenuItem<OrderOptions>(
+                child: Text("Order Z-A"),
+                value: OrderOptions.orderza,
+              ),
+            ],
+            onSelected: _orderList(),
+          )
+        ],
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
@@ -128,7 +147,10 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 20.0,
                           ),
                         ),
-                        onPressed: (){},
+                        onPressed: (){
+                          launch("tel:${contacts[index].phone}");
+                          Navigator.pop(context);
+                        },
                       ),
                     ),
                     Padding(
@@ -200,4 +222,6 @@ class _HomePageState extends State<HomePage> {
       });
     });
   }
+
+  void _orderList( OrderOptions result ){}
 }
